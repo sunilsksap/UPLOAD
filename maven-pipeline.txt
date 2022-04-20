@@ -1,0 +1,63 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('cleanworkspace') {
+            steps {
+                cleanWs()
+            }
+        }
+         stage('project clone') {
+            steps {
+                git branch: 'master', url: 'https://github.com/gurudath/java-hello-world-with-maven.git'
+                sh ("mvn clean")
+                //sh ("mvn versions:set -DnewVersion=$version")
+                sh ("mvn package")
+            }
+        }
+        stage('Confirm button') {
+            steps {
+               sh("echo asdasdasd")
+            }
+        }
+    }
+}
+
+
+
+
+###########################################################
+pipeline {
+    agent any
+    
+    parameters {
+        string(name: 'version', defaultValue: '0.1.0', description: 'Build_version')
+       /* text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
+        booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
+        choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
+        password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')*/
+    }
+
+    stages {
+        stage('cleanworkspace') {
+            steps {
+                cleanWs()
+            }
+        }
+         stage('project clone') {
+            steps {
+                git branch: 'master', url: 'https://github.com/gurudath/java-hello-world-with-maven.git'
+                sh ("mvn clean")
+                sh ("mvn versions:set -DnewVersion=$version")
+                sh ("mvn package")
+            }
+        }
+        stage('Confirm button') {
+            steps {
+                //input 'Please confirm'
+               sh("echo asdasdasd")
+            }
+        }
+    }
+}
+
